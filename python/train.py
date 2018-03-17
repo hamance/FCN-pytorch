@@ -20,8 +20,10 @@ from CamVid_loader import CamVidDataset
 from Cityscapes_loader import CityScapesDataset
 from fcn import FCN8s, FCN16s, FCN32s, FCNs, VGGNet
 
-
-n_class    = 20
+if sys.argv[1] == 'CamVid':
+    n_class = 32
+else:
+    n_class = 20
 
 batch_size = 6
 epochs     = 500
@@ -39,7 +41,11 @@ if sys.argv[1] == 'CamVid':
     else:
         root_dir = "/mnt/ht/fcn/CamVid/"
 else:
-    root_dir   = "CityScapes/"
+    if platform.system() == 'Windows':
+        root_dir = "g:\\fcn\\CityScapes"
+    else:
+        root_dir = "/mnt/ht/fcn/CityScapes/"
+
 train_file = os.path.join(root_dir, "train.csv")
 val_file   = os.path.join(root_dir, "val.csv")
 
