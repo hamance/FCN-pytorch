@@ -53,7 +53,7 @@ use_gpu = torch.cuda.is_available()
 num_gpu = list(range(torch.cuda.device_count()))
 
 if sys.argv[1] == 'CamVid':
-    train_data = CamVidDataset(csv_file=train_file, phase='train')
+    train_data = CamVidDataset(csv_file=train_file, n_class=n_class, phase='train')
 else:
     train_data = CityScapesDataset(csv_file=train_file, n_class=n_class, phase='train')
 train_loader = DataLoader(train_data, batch_size=batch_size, shuffle=True, num_workers=8)
@@ -61,7 +61,7 @@ train_loader = DataLoader(train_data, batch_size=batch_size, shuffle=True, num_w
 if sys.argv[1] == 'CamVid':
     val_data = CamVidDataset(csv_file=val_file, n_class=n_class, phase='val', flip_rate=0)
 else:
-    val_data = CityScapesDataset(csv_file=val_file, phase='val', flip_rate=0)
+    val_data = CityScapesDataset(csv_file=val_file, n_class=n_class, phase='val', flip_rate=0)
 val_loader = DataLoader(val_data, batch_size=1, num_workers=8)
 
 vgg_model = VGGNet(requires_grad=True, remove_fc=True)
