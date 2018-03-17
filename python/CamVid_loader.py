@@ -2,19 +2,24 @@
 
 from __future__ import print_function
 
-from matplotlib import pyplot as plt
-import pandas as pd
-import numpy as np
-import scipy.misc
-import random
 import os
+import platform
+import random
 
+import numpy as np
+import pandas as pd
+import scipy.misc
 import torch
-from torch.utils.data import Dataset, DataLoader
+from matplotlib import pyplot as plt
+from torch.utils.data import DataLoader, Dataset
 from torchvision import utils
 
 
-root_dir   = "CamVid/"
+if platform.system() == 'Windows':
+    root_dir = "g:\\fcn\\CamVid"
+else:
+    root_dir = "/mnt/ht/fcn/CamVid/"
+
 train_file = os.path.join(root_dir, "train.csv")
 val_file   = os.path.join(root_dir, "val.csv")
 
@@ -41,7 +46,7 @@ class CamVidDataset(Dataset):
             self.new_w = train_w
         elif phase == 'val':
             self.flip_rate = 0.
-            self.crop = False
+            # self.crop = False
             self.new_h = val_h
             self.new_w = val_w
 
@@ -120,6 +125,6 @@ if __name__ == "__main__":
             plt.figure()
             show_batch(batch)
             plt.axis('off')
-            plt.ioff()
+            plt.ioff() 
             plt.show()
             break

@@ -2,18 +2,24 @@
 
 from __future__ import print_function
 
-from matplotlib import pyplot as plt
+import os
+import platform
+import random
+
 import matplotlib.image as mpimg
 import numpy as np
 import scipy.misc
-import random
-import os
-
+from matplotlib import pyplot as plt
 
 #############################
     # global variables #
 #############################
-root_dir          = "CamVid/"
+# root_dir          = "CamVid/"
+if platform.system() == 'Windows':
+    root_dir = "g:\\fcn\\CamVid"
+else:
+    root_dir = "/mnt/ht/fcn/CamVid/"
+
 data_dir          = os.path.join(root_dir, "701_StillsRaw_full")    # train data
 label_dir         = os.path.join(root_dir, "LabeledApproved_full")  # train label
 label_colors_file = os.path.join(root_dir, "label_colors.txt")      # color to label
@@ -112,13 +118,13 @@ def parse_label():
         print("Finish %s" % (name))
 
     # test some pixels' label    
-    img = os.path.join(label_dir, os.listdir(label_dir)[0])
-    img = scipy.misc.imread(img, mode='RGB')   
-    test_cases = [(555, 405), (0, 0), (380, 645), (577, 943)]
-    test_ans   = ['Car', 'Building', 'Truck_Bus', 'Car']
-    for idx, t in enumerate(test_cases):
-        color = img[t]
-        assert color2label[tuple(color)] == test_ans[idx]
+    # img = os.path.join(label_dir, os.listdir(label_dir)[0])
+    # img = scipy.misc.imread(img, mode='RGB')   
+    # test_cases = [(555, 405), (0, 0), (380, 645), (577, 943)]
+    # test_ans   = ['Car', 'Building', 'Truck_Bus', 'Car']
+    # for idx, t in enumerate(test_cases):
+    #     color = img[t]
+    #     assert color2label[tuple(color)] == test_ans[idx]
 
 
 '''debug function'''
