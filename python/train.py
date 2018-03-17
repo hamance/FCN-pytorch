@@ -2,22 +2,23 @@
 
 from __future__ import print_function
 
+import os
+import platform
+import sys
+import time
+
+import numpy as np
 import torch
 import torch.nn as nn
 import torch.optim as optim
-from torch.optim import lr_scheduler
+from matplotlib import pyplot as plt
 from torch.autograd import Variable
+from torch.optim import lr_scheduler
 from torch.utils.data import DataLoader
 
-from fcn import VGGNet, FCN32s, FCN16s, FCN8s, FCNs
-from Cityscapes_loader import CityscapesDataset
 from CamVid_loader import CamVidDataset
-
-from matplotlib import pyplot as plt
-import numpy as np
-import time
-import sys
-import os
+from Cityscapes_loader import CityScapesDataset
+from fcn import FCN8s, FCN16s, FCN32s, FCNs, VGGNet
 
 
 n_class    = 20
@@ -33,8 +34,11 @@ configs    = "FCNs-BCEWithLogits_batch{}_epoch{}_RMSprop_scheduler-step{}-gamma{
 print("Configs:", configs)
 
 if sys.argv[1] == 'CamVid':
-    root_dir   = "CamVid/"
-else
+    if platform.system() == 'Windows':
+        root_dir = "g:\\fcn\\CamVid"
+    else:
+        root_dir = "/mnt/ht/fcn/CamVid/"
+else:
     root_dir   = "CityScapes/"
 train_file = os.path.join(root_dir, "train.csv")
 val_file   = os.path.join(root_dir, "val.csv")
